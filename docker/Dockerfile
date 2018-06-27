@@ -47,7 +47,7 @@ RUN Rscript -e "install.packages('rmdformats',dependencies = T, repos='http://cr
 RUN Rscript -e "install.packages(c('glmnet', 'mclust', 'kernlab', 'igraph', 'relaimpo'), repos='http://cran.ism.ac.jp')"
 
 # for data handling
-RUN Rscript -e "install.packages(c('sets', 'tidyverse', 'vars'), repos='http://cran.ism.ac.jp')"
+RUN Rscript -e "install.packages(c('sets', 'tidyverse', 'vars', 'magrittr'), repos='http://cran.ism.ac.jp')"
 
 # for graph & view
 RUN Rscript -e "install.packages(c('DT','dygraphs','visNetwork', 'progress'), repos='http://cran.ism.ac.jp')"
