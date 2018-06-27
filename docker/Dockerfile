@@ -1,7 +1,7 @@
 FROM centos:7
 
-ENV http_proxy odmaServerWatch:0867681521@rep.proxy.nic.fujitsu.com:8080
-ENV https_proxy odmaServerWatch:0867681521@rep.proxy.nic.fujitsu.com:8080
+ENV http_proxy $proxy
+ENV https_proxy $proxy
 
 RUN rm -f /var/run/yum.pid
 RUN yum clean all
@@ -24,8 +24,7 @@ RUN echo "inui" | passwd --stdin inui
 EXPOSE 8787
 RUN rstudio-server start
 
-#RUN wget -d FTP_PROXY='http://odmaServerWatch:0867681521@rep.proxy.nic.fujitsu.com:8080' 'https://curl.haxx.se/download/curl-7.59.0.tar.gz'
-RUN wget -e use_proxy=yes -e http_proxy='http://odmaServerWatch:0867681521@rep.proxy.nic.fujitsu.com:8080' -e https_proxy='http://odmaServerWatch:0867681521@rep.proxy.nic.fujitsu.com:8080' -e ftp_proxy='http://odmaServerWatch:0867681521@rep.proxy.nic.fujitsu.com:8080' 'https://curl.haxx.se/download/curl-7.59.0.tar.gz'
+RUN wget -e use_proxy=yes -e http_proxy=$proxy -e https_proxy=$proxy -e ftp_proxy=$proxy 'https://curl.haxx.se/download/curl-7.59.0.tar.gz'
 
 RUN yum install libcurl-devel -y
 
