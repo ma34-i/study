@@ -1,0 +1,2 @@
+- 時系列解析の勉強に良さげなサイトを発見
+  - https://otexts.org/fpp2/weekly.html
