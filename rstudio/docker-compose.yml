@@ -1,0 +1,22 @@
+version: "3"
+services:
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    ports:
+      - 80:80
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+  server1:
+    build: ./
+    image: rstudio
+#    ports:
+#      - "8787:8787"
+    privileged: true
+    environment:
+      - VIRTUAL_HOST=web.localhost
+    volumes:
+      - "./src:/home/alice/workspace"
+    restart: always
+
+
