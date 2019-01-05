@@ -1,0 +1,58 @@
+# コンテナ外からアクセスを行えるように、Elastics Searchの9200番ポートとKibanaの5601番ポートを portsに指定します。
+# システム要件として nofile を 65536 することが書かれている ので　ulimits で設定を行います。
+# Elastics Searchのデータを残すために データボリュームを割り当てます。
+# Elastics Searchの設定をカスタマイズするので、設定ファイルを置いてある es/config ディレクトリを マウントします。
+version: '2'
+
+services:
+  elasticsearch:
+
+    build: es
+#    volumes:
+#      - es-data:/usr/share/elasticsearch/data
+#      - ./es/config:/usr/share/elasticsearch/config
+    ports:
+      - 9200:9200
+    expose:
+      - 9300
+    ulimits:
+#      nofile:
+#        soft: 65536
+#        hard: 65536
+      memlock:
+        soft: -1 
+        hard: -1 
+        # https://github.com/docker-library/elasticsearch/issues/111
+        # uliimit
+    environment:  # つけたしてみた
+      ES_JAVA_OPTS: "-Xms400m -Xmx400m"
+      discovery.type: single-node
+    networks:
+      - default
+
+  kibana:
+    build: kibana
+#    links:
+#       - elasticsearch:elasticsearch
+  #   volumes:
+  #     - ./kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    ports:
+      - 5601:5601
+    environment:
+      VIRTUAL_HOST: docker.kibana
+      SERVER_NAME: docker.kibana
+#      ELASTICSEARCH_URL: http://docker.elasteicsearch:9200
+#      ELASTICSEARCH_URL: http://172.17.0.1:9200
+#      ELASTICSEARCH_URL: http://docker.for.mac.host.internal:9200/
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+    networks:
+      - default
+
+# volumes:
+#   es-data:
+#     driver: local
+networks:
+#  esnet:
+  default:
+    external:
+      name: common_link
