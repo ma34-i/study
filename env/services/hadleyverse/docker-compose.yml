@@ -1,0 +1,19 @@
+version: '2'
+services:
+
+  hadleyverse:
+#    image: rocker/hadleyverse
+    build: .
+    container_name: hadleyverse
+    environment:
+      VIRTUAL_HOST: docker.hadleyverse
+    volumes:
+      - "../../../src:/home/rstudio"
+    ports:
+      - "8787:8787"
+    restart: always
+
+networks:
+  default:
+    external:
+      name: common_link

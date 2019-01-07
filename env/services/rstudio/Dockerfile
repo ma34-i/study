@@ -38,12 +38,12 @@ RUN Rscript -e "source('http://bioconductor.org/biocLite.R')"\
 && Rscript -e "install.packages('pcalg',dependencies = T)"
 
 # for pdf
-RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 \
-&& yum install -y bzip2 \
-&& tar jxf phantomjs-1.9.7-linux-x86_64.tar.bz2 \
-&& ln -s phantomjs-1.9.7-linux-x86_64 /usr/local/src/phantomjs \
-&& ln -s /usr/local/src/phantomjs/bin/phantomjs /usr/local/bin/phantomjs \
-&& yum install -y texlive-* 
+# RUN wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.7-linux-x86_64.tar.bz2 \
+# && yum install -y bzip2 \
+# && tar jxf phantomjs-1.9.7-linux-x86_64.tar.bz2 \
+# && ln -s phantomjs-1.9.7-linux-x86_64 /usr/local/src/phantomjs \
+# && ln -s /usr/local/src/phantomjs/bin/phantomjs /usr/local/bin/phantomjs \
+# && yum install -y texlive-* 
 
 RUN yum install -y vim
 
